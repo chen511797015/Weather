@@ -3,7 +3,6 @@ package com.pax.weather.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pax.weather.R;
+import com.pax.weather.service.AutoUpdateService;
 import com.pax.weather.util.HttpCallbackListener;
 import com.pax.weather.util.HttpUtil;
 import com.pax.weather.util.Utility;
 
-import static android.R.attr.cacheColorHint;
-import static android.R.attr.type;
 
 /**
  * Created by Administrator on 2017/4/11 19:07
@@ -154,6 +152,10 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         currentDateText.setText(prefs.getString("current_date", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
+
+        //启动后台刷新数据
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
 
